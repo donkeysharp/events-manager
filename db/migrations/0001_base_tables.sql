@@ -5,7 +5,8 @@ create table events (
     slug varchar(255) not null,
     description text not null,
     created_at timestamptz not null default now(),
-    updated_at timestamptz not null default now()
+    updated_at timestamptz not null default now(),
+    deleted_at timestamptz
 );
 
 create table speakers (
@@ -18,6 +19,7 @@ create table speakers (
 
     created_at timestamptz not null default now(),
     updated_at timestamptz not null default now(),
+    deleted_at timestamptz,
 
     constraint fk_speaker_event foreign key(event_id) references events(id)
 );
@@ -33,6 +35,7 @@ create table talks (
 
     created_at timestamptz not null default now(),
     updated_at timestamptz not null default now(),
+    deleted_at timestamptz,
 
     constraint fk_talk_even foreign key(event_id) references events(id)
 );
@@ -47,7 +50,8 @@ create table attendees (
     social_networks jsonb not null default '{}'::jsonb,
 
     created_at timestamptz not null default now(),
-    updated_at timestamptz not null default now()
+    updated_at timestamptz not null default now(),
+    deleted_at timestamptz not null default now()
 );
 
 create table stages (
@@ -58,6 +62,7 @@ create table stages (
 
     created_at timestamptz not null default now(),
     updated_at timestamptz not null default now(),
+    deleted_at timestamptz,
 
     constraint fk_stage_event foreign key(event_id) references events(id)
 );
@@ -69,6 +74,7 @@ create table notes (
 
     created_at timestamptz not null default now(),
     updated_at timestamptz not null default now(),
+    deleted_at timestamptz,
 
     constraint fk_note_talk foreign key(talk_id) references talks(id)
 );
